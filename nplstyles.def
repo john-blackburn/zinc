@@ -1,0 +1,314 @@
+% $Id: nplstyles.def 5022 2009-09-09 10:49:40Z rmb1 $
+% $URL: https://svn.npl.co.uk/repos/MSC/projects/ssfm/nplstyles/trunk/nplstyles.def $
+
+\ProvidesFile{nplstyles.def}	% [2008/07/23 NPL style $Revision: 5022 $]
+\RequirePackage{fancyhdr}
+\RequirePackage{graphicx}
+\RequirePackage{ifthen}
+
+% text commands
+
+\newcommand\NPLtext{National Physical Laboratory}
+\newcommand\NPLstatement
+ {The \NPLtext\ is operated on behalf of the National Measurement Office
+  by NPL Management Ltd, a wholly owned subsidiary of Serco Group plc.}
+
+% internal parameters -- with defaults
+
+\newcommand\NPL@hoc{\PackageWarningNoLine{nplstyles}
+{Use \protect\NPLapprovername\space to set approver name}}
+\newcommand\NPL@centre{\PackageWarningNoLine{nplstyles}
+{Use \protect\NPLcentre\space to set NPL division/team/group}}
+\newcommand\NPL@ISSN{\PackageWarningNoLine{nplstyles}
+{Use \protect\NPLserial\space to set NPL report series ISSN}}
+
+\newcommand\NPL@copy{$\copyright$ Queen'%'
+s Printer and Controller of HMSO, \NPL@year}
+
+\newcommand\NPL@extract{Extracts from this \NPL@type\
+may be reproduced provided the source is acknowledged
+and the extract is not taken out of context}
+
+\newcommand\NPL@acknowledgement
+{We gratefully acknowledge the financial support of the UK 
+Department for Business, Innovation and Skills
+(National Measurement Office)}
+
+\newcommand\NPL@role{Knowledge Leader for the \NPL@centre}
+\newcommand\NPL@approve{\NPL@hoc,\\\NPL@role}
+\newcommand\NPL@sign{Approved on behalf of NPLML by \NPL@approve}             % PMH 07-10-2010
+
+\newcommand\NPL@addr
+ {Hampton Road, Teddington, Middlesex, United Kingdom\ \ TW11~0LW}
+
+\newcommand\NPL@number{0}
+\newcommand\NPL@year{\number\year}
+\newcommand\NPL@head{\@title}
+\newcommand\NPL@foot{}
+\newcommand\NPL@title{\@title}
+\newcommand\NPL@covertitle{\@title}
+\newcommand\NPL@status{}
+\newcommand\NPL@author{\NPL@authors\\\NPL@centre}
+\newcommand\NPL@authors{\@author}
+\newcommand\NPL@coverauthor{\@author}
+\newcommand\NPL@docref{\NPL@numberedref}
+
+% \NPL@type, \NPL@numberedref, \NPL@surtitle are defined by calling style files
+
+\newskip\NPL@skip \NPL@skip=30mm minus 20mm
+
+\newif\ifNPL@closed
+\newif\ifNPL@chapter
+\newif\ifNPL@cover
+\newif\ifNPL@DIUSfoot
+% Need a new logo for DBIS
+% \NPL@DIUSfoottrue
+
+\ifthenelse{\isundefined{\chapter}}{}{\NPL@chaptertrue}
+
+\ifNPL@chapter\else\newcommand\NPL@l@section{
+% \newcommand*\l@section from article.cls with 1.5em -> 7em
+\renewcommand*\l@section[2]{%
+  \ifnum \c@tocdepth >\z@
+    \addpenalty\@secpenalty
+    \addvspace{1.0em \@plus\p@}%
+    \setlength\@tempdima{7em}		% allow for "Appendix "
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      ##1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss ##2}\par
+    \endgroup
+  \fi}
+}\fi
+
+
+% user parameter setting commands
+
+\newcommand\NPLnumber[1]{\renewcommand\NPL@number{#1}}
+% report number e.g.	{CISE 45/99}
+
+\newcommand\NPLstatus[1]{\renewcommand\NPL@status{\begin{center}#1\end{center}}}
+\newcommand\NPLcentrehead[1]{\renewcommand\NPL@hoc{#1}}
+\newcommand\NPLapprovername[1]{\renewcommand\NPL@hoc{#1}}
+\newcommand\NPLcentre[1]{\renewcommand\NPL@centre{#1}}
+% NPL centre		{Centre for Information Systems Engineering}
+\newcommand\NPLauthor[1]{\renewcommand\NPL@author{#1}}
+\newcommand\noNPLcentre{\renewcommand\NPL@author{\NPL@authors}}
+\newcommand\NPLotherauthor[1]{\renewcommand\NPL@authors{\@author\\ with #1}}
+\newcommand\NPLcoverauthor[1]{\renewcommand\NPL@coverauthor{#1}}
+
+\newcommand\NPLtitle[1]{\renewcommand\NPL@title{#1}}
+\newcommand\NPLcovertitle[1]{\renewcommand\NPL@covertitle{#1}}
+
+\newcommand\NPLcopyright[1]{\renewcommand\NPL@copy{#1}}
+\newcommand\NPLnotice[1]{\renewcommand\NPL@extract{#1}}
+\newcommand\NPLacknowledge[1]{\renewcommand\NPL@acknowledgement{#1}}
+\newcommand\NPLapproverjob[1]{\renewcommand\NPL@role{#1}}
+\newcommand\NPLapprover[1]{\renewcommand\NPL@approve{#1}}
+\newcommand\NPLaddress[1]{\renewcommand\NPL@addr{#1}}
+
+\newcommand\NPLyear[1]{\renewcommand\NPL@year{#1}}
+% Copyright Year (4 digits)
+
+\newcommand\NPLserial[1]{\renewcommand\NPL@ISSN{ISSN #1}}
+% Centre ISSN e.g.	{1361--407X}
+
+\newcommand\NPLsigned[1]{\renewcommand\NPL@sign{#1}}
+% Authority e.g.	{Authorised by Dr Dave Rayner,\\
+% Head of the Centre for Information Systems Engineering}
+
+\newcommand\NPL@left{\NPL@head}
+\newcommand\NPLheader[2][]{\renewcommand\NPL@head{#2}%
+\ifthenelse{\equal{#1}{}}{}{\renewcommand\NPL@left{#1}}}
+% Short title for running header
+
+\newcommand\NPLfooter[1]{\renewcommand\NPL@foot{#1}}
+% File ref or web address for the document
+
+% interface to hyperref for names/email 
+
+\providecommand\href[2]{#2}
+\newcommand\mailhref[2]{\href{mailto:#1}{#2}}
+\newcommand\NPLhref[2]{\mailhref{#1.#2@npl.co.uk}{#1 #2}}
+\newcommand\email[1]{\mailhref{#1}{e-mail: #1}}
+
+% command to set no parindent, and set parskip
+ 
+\newcommand\noparindent[1][0.5\normalbaselineskip]{\parindent 0pt\parskip #1}
+
+% useful conditional
+
+\newif\ifdraft 
+
+% I'm not sure this should be kept: latex probably knows best!
+% but it was needed by BPG4 as well as BPG1 - RMB, 2004-04-07
+\newcommand\NPLtocspacing{
+\ifNPL@chapter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{2.6em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{4.1em}{3.3em}}
+\renewcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.6em}}
+\let\l@table\l@figure
+\else\typeout{\noexpand\NPLtocspacing not defined for article}
+\fi}
+% Original settings in report.cls ?
+% \newcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}}
+% \newcommand*\l@subsection{\@dottedtocline{2}{3.8em}{3.2em}}
+% \newcommand*\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
+% \newcommand*\l@paragraph{\@dottedtocline{4}{10em}{5em}}
+% \newcommand*\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
+% \newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
+% \let\l@table\l@figure
+
+% abstract environment
+
+\providecommand{\abstract}{}
+\renewenvironment{abstract}
+{\NPL@abstractinit\vskip\NPL@skip\NPL@abstractstart}
+{\NPL@abstractafter\NPL@abstractclose}
+
+% appendix with 'Appendix A'
+\newcommand\NPLappendix{\appendix
+\ifNPL@chapter
+\typeout{\noexpand\NPLappendix not needed in report or book}\else
+\let\NPL@theappendix\thesection
+\renewcommand\thesection{\appendixname\space\NPL@theappendix} 
+\renewcommand\thesubsection{\NPL@theappendix.\@arabic\c@subsection}
+\addtocontents{toc}{\protect\NPL@l@section}
+\fi}
+
+% options
+
+\DeclareOption{mscg}
+ {\ExecuteOptions{ms,otsc}
+  \NPLcentre{Mathematics and Scientific Computing Group}
+ }
+\DeclareOption{ms-otsc}{\ExecuteOptions{ms,otscdiv}}
+\DeclareOption{otscdiv}
+ {\NPLapprovername{Jonathan Williams}
+  \NPLcentre{Optical Technology and Scientific Computing division} 
+ }
+\DeclareOption{otsc}
+ {\NPLapprovername{Jonathan Williams}
+  \NPLapproverjob{Knowledge Leader for the
+   Optical Technology and Scientific Computing team} 
+ }
+\DeclareOption{ms}
+ {
+  \NPLserial{1754--2960}	% ISSN for new MS NPL report series
+ }
+\DeclareOption{dem-es}
+ {\NPLapprovername{Jonathan Williams}
+  \NPLapproverjob{Knowledge Leader for the Electrical and Software team} 
+  \NPLserial{1744--0475}	
+ }
+\DeclareOption{cmsc}
+ {\NPLcentrehead{Dr Dave Rayner}
+  \NPLcentre{Centre for Mathematics and Scientific Computing} 
+  \NPLserial{1471--0005}	
+ }
+\DeclareOption{cise}
+ {\NPLcentrehead{Dr Dave Rayner}
+  \NPLcentre{Centre for Information Systems Engineering}
+  \NPLserial{1361--407X}
+ }
+\DeclareOption{abstractpage}
+ {\renewenvironment{abstract}
+   {\NPL@abstractinit\NPL@abstractafter\NPL@abstractstart}{\NPL@abstractclose}
+ }
+\DeclareOption{nohyphen}{\hyphenpenalty=9999\exhyphenpenalty=9999}
+\DeclareOption{protected}{\ExecuteOptions{restricted}}
+\DeclareOption{restricted}
+ {\NPL@closedtrue
+% 
+  \renewcommand\NPL@head{}
+  \newcommand\NPL@restrict{PROTECT}
+  \newcommand\NPLclassification[1]{\renewcommand\NPL@restrict{#1}}
+%
+  \renewcommand\NPL@ISSN{\null}
+  \renewcommand\NPLserial[1]{\PackageWarningNoLine{nplstyles}
+   {Do not \protect\NPLserial\space for closed \NPL@type}}
+%
+  \renewcommand\NPL@extract{\PackageWarningNoLine{nplstyles}
+   {Use \protect\NPLnotice\space to set appropriate notice for closed \NPL@type}}
+%
+  \renewcommand\NPL@acknowledgement{\null}
+  \renewcommand\NPLacknowledge[1]{\PackageWarningNoLine{nplstyles}
+   {Do not \protect\NPLacknowledge\space for closed \NPL@type}}
+ }
+\DeclareOption{cover}	{\NPL@covertrue}
+\DeclareOption{dti}	{\NPL@DIUSfoottrue}
+\DeclareOption{dius}	{\NPL@DIUSfoottrue}
+\DeclareOption{notdti}	{\NPL@DIUSfootfalse}
+\DeclareOption{nodius}	{\NPL@DIUSfootfalse}
+
+% Revision 3.6  2005/05/04 15:14:29  rmb1
+% moved layout from styles to report; change preamble page names; corrected abstractpage
+%
+% Revision 3.5  2005/05/04 09:28:12  rmb1
+% used NPL@status on cover; PassOptionsTo hyperref; version 05/05/05 (the neighbour of the beast)
+%
+% Revision 3.4  2005/05/03 16:30:55  rmb1
+% Added ssfmbpg2004.sty	- snap-shot of ssfmbpg.sty March/April 2004
+%
+% Added open2001.tex open2004.tex ssfmbpgX2001.tex ssfmgpgY2004.tex
+% 	- to test *2004.sty for CISE/CMSC reports and guides
+%
+% Removed nplreport2000.sty nplreportV.sty ssfm3pg.sty - moved
+%
+% Changed naming scheme:
+% 	*2004.sty is from March/April 2004
+% 	*.sty (with no year) is current
+%
+% Removed all the negative page numbers,
+% 	requires plainpages=false,pdfpagelabels
+% 	and avoids conflicting page numbers using \pagenumbering
+%
+% Revision 3.3  2005/04/28 16:07:28  rmb1
+% allow numbers in restricted reports
+%
+% Revision 3.2  2004/10/26 10:49:41  rmb1
+% new address
+%
+% Revision 3.1  2004/10/21 17:57:19  rmb1
+% *** empty log message ***
+%
+% Revision 1.1.2.1  2004/10/21 17:53:25  rmb1
+% see nplstyle.def rev3.1
+%
+% Revision 3.1  2004/10/21 17:40:53  rmb1
+% *** empty log message ***
+%
+% Revision 1.2  2004/10/21 16:33:54  rmb1
+% nplstyle.def nplreport2000.sty ssfmbpg.sty
+% 	Styles for pre-re-contractorization / SSfM-2 / CISE
+%
+% nplstyles.def nplreport2004.sty ssf3pg.sty
+% 	Styles for post-re-contractorization / SSfM-3 / MSCG / restricted / GPG
+%
+% nplreport.sty
+% 	Chooses between nplreport2000 and nplreport2004
+%
+
+% Log: nplstyles.def,v 
+% Revision 2.17  2004/07/21 10:11:36  rmb1
+% added \ifNPL@closed
+% replace \ifthenelse{\equal{}{\NPL@restrict}} by \ifNPL@closed
+% added restricted text to cover and prelude pages
+%
+% Revision 2.16  2004/07/13 15:38:04  rmb1
+% approver is Knowledge leader
+%
+% Revision 2.15  2004/06/16 17:16:44  rmb1
+% Added numberedref/documentref, so restricted reports can use the latter.
+% Increased marginparwidth to accomodate DEM-MSC (ugh)
+% Removed 'By' before author in NPL report cover
+% Added resticted label to plain pagestyle header
+% Added approvername, approverjob, approver and acknowledge
+% Remove deprecated \NPLdocref and \NPLCRyear
+% Moved NPL address to correct position on copyright page
+% Defined mscg option with Bernard as approver
+% Defined restricted option with \NPLdocument, \NPLclassification
+%

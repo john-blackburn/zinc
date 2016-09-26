@@ -1,0 +1,54 @@
+#include "zincfe.h"
+#include "windows.h"
+
+IDC_ZICON ICON DISCARDABLE "zmesh/z.ico"
+
+IDD_MAIN DIALOG DISCARDABLE  0, 0, 400, 176
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Zinc 3.6"
+FONT 10, "MS Sans Serif"
+BEGIN
+    LTEXT           "Path:",IDC_STATIC,          10, 10, 40, 8
+    LTEXT           "(none)",IDC_PATH,           50, 10,140, 8
+
+    GROUPBOX        "Input files",IDC_STATIC,     7, 25,190,65
+
+    LTEXT           "Input",IDC_STATIC,    10, 35, 40, 8
+    LTEXT           "(none)",IDC_FILENAME,       50, 35,100, 8
+    PUSHBUTTON      "view",IDC_VFILE,            170, 35, 20, 8
+
+    LTEXT           "Mesh file",IDC_STATIC,     10, 45, 40, 8
+    LTEXT           "(none)",IDC_MESHNAME,       50, 45,100, 8
+    PUSHBUTTON      "view",IDC_VMESH,            170, 45, 20, 8
+
+    LTEXT           "Constants file",IDC_STATIC,  10, 55, 40, 8
+    LTEXT           "(none)",IDC_CONSTNAME,        50, 55,100, 8
+    PUSHBUTTON      "view",IDC_VCONST,            170, 55, 20, 8
+
+    LTEXT           "NL file",IDC_STATIC,         10, 65, 40, 8
+    LTEXT           "(none)",IDC_NLNAME,           50, 65,94, 8
+    PUSHBUTTON      "view",IDC_VNL,               170, 65, 20, 8
+    EDITTEXT        IDC_EXT,                      145, 65, 20,10
+
+    LTEXT           "Restart file:",IDC_STATIC,  10, 75, 40, 8
+    LTEXT           "(none)",IDC_RSTNAME,        50, 75,100, 8
+
+    GROUPBOX        "Output files",IDC_STATIC,    7, 95,190,45
+
+    LTEXT           "Output file",IDC_STATIC,   10,110, 40, 8
+    LTEXT           "(none)",IDC_OUTNAME,        50,110,100, 8
+
+    LTEXT           "List file",IDC_STATIC,     10,120, 40, 8
+    LTEXT           "(none)",IDC_LSTNAME,        50,120,100, 8
+    PUSHBUTTON      "view",IDC_VLST,             170,120, 20, 8
+
+    LTEXT           "Status:",IDC_STATIC,        40,145, 40, 8
+    LTEXT           "READY",IDC_STATUS,          80,145,100, 8
+
+    PUSHBUTTON      "&Open",IDC_OPEN,             7,160, 50,14
+    PUSHBUTTON      "&Run",IDC_RUN,              60,160, 50,14
+    PUSHBUTTON      "&Dismiss",IDC_CANCEL,       113,160, 50,14
+
+    EDITTEXT        IDC_EDIT,                   200,2,195,170,WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY
+END
+

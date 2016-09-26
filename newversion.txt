@@ -1,0 +1,40 @@
+How to make a new version (eg 3.3)
+==================================
+
+Add all sorts of cool new features!
+
+change to 3.3 in zincman.tex, zinctheo.tex
+change to 3.3 in common.f90 (for zinc.exe and zpp.exe)
+change to 3.3 in zincfe.rc and zppwin.rc (twice)
+change to 3.3 in win.f90 and zmesh.f90
+change to 3.3 in zinc.nsi
+
+Latex zincman.tex
+dvips zincman.dvi
+convert to zincman.pdf
+
+Latex zinctheo.tex
+dvips zinctheo.dvi
+convert to zinctheo.pdf
+
+convert tutorial.doc to tutorial.pdf
+
+make (zinc/zpp)
+compile with zfec.bat, zppwinc.bat
+
+go to \zmesh
+make
+
+COMMIT
+TEST
+
+run nsis on zinc.nsi
+
+copy zinc33setup.exe to T:
+ftp zinc33setup.exe to ftp site.
+
+CVS TAG
+
+Change export.txt to reflect new version
+Update website FAQ (latest version)
+Update Obtaining Zinc section on website

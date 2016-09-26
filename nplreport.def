@@ -1,0 +1,197 @@
+% $Id: nplreport.def 4581 2008-07-23 16:50:13Z rmb1 $
+% $URL: http://www.msc.npl.co.uk:8080/svn/repos/projects/ssfm/nplstyles/trunk/nplreport.def $
+
+\ProvidesFile{nplreport.def}	% [2008/07/23 NPL report $Revision: 4581 $]
+
+% internal parameters -- with defaults
+
+\newcommand\NPL@type{report}
+\newcommand\NPL@numberedref{NPL Report \NPL@number}
+\newcommand\NPL@surtitle{}
+
+% parameter setting command
+
+\newcommand\NPLreport[1]{\renewcommand\NPL@surtitle{#1\\[\baselineskip]}}
+\newcommand\NPLtype[1]{\renewcommand\NPL@type{#1}}
+
+% layout command
+
+\textwidth=140mm
+\oddsidemargin=35mm
+\advance\oddsidemargin-1truein
+\evensidemargin=\oddsidemargin
+\marginparwidth=20mm
+\marginparsep=7mm
+ 
+\newcommand\makecover[1][]
+{\pagestyle{empty}
+\cleardoublepage
+{\sffamily%\bfseries
+\columnsep=0mm
+\ifNPL@cover\thispagestyle{cover}\fi
+%\twocolumn\null\newpage                                                  % PMH 07-10-2010
+%\null\vskip 80mm\noindent                                                % PMH 07-10-2010
+%\begin{minipage}[t][110mm][s]{\columnwidth}                              % PMH 07-10-2010
+\begin{flushleft}                                                         % PMH 07-10-2010
+{\bfseries                                                                % PMH 07-10-2010
+\vspace{10mm}                                                             % PMH 07-10-2010
+{\hfill\large NPL REPORT\space\mbox{\NPL@number}\par}\vspace{45mm}        % PMH 07-10-2010
+{\Large\NPL@surtitle\par\NPL@covertitle\par}\vspace{25mm}                 % PMH 07-10-2010
+{\large\NPL@coverauthor\par}\vspace{35mm}                                 % PMH 07-10-2010 
+% I dont think open reports have "NOT RESTRICTED" any more.
+% If they do then following should be used
+% \ifNPL@closed\NPL@restrict\else\NPL@opentext\fi\par\vfill
+\ifNPL@closed\NPL@restrict\par\vfill\fi
+}\@date 
+\ifdraft\vfill{\large\NPL@status}\null\fi
+\end{flushleft}                                                           % PMH 07-10-2010
+%\end{minipage}                                                           % PMH 07-10-2010
+% set current page with local page layout
+\def\thepage{cover#1}
+\clearpage} 
+%\onecolumn                                                               % PMH 07-10-2010
+% produce blank page
+{\def\thepage{blank#1}\hbox{}\cleardoublepage}}
+
+% \newcommand\NPL@opentext{NOT RESTRICTED}
+
+\renewcommand\maketitle
+{\def\thepage{title}
+ \pagestyle{title}
+ \begin{center}
+ {\LARGE \NPL@title\par}
+  \vskip\NPL@skip
+ {\large\begin{tabular}[t]{c}\NPL@author\end{tabular}\par
+  \vskip\NPL@skip
+  \@date\par}%
+ \end{center}\pagestyle{plain}}
+
+\newcommand\NPL@abstractname{ABSTRACT}
+\newcommand\NPL@abstractinit{\pagestyle{title}}
+\newcommand\NPL@abstractstart
+{\pagenumbering{Alph}{\LARGE\begin{center}\NPL@abstractname\end{center}}\par\noindent\ignorespaces}
+\newcommand\NPL@abstractafter{\def\thepage{title}\vfill{\LARGE\NPL@status}\null\NPL@copyrightpage}
+\newcommand\NPL@abstractclose{\cleardoublepage\setcounter{page}{1}}
+
+\newcommand\NPLabstractname[1]{\renewcommand\NPL@abstractname{#1}}
+
+\newcommand\makecopyrightpage{{\pagestyle{title}\NPL@abstractafter}}
+
+\newcommand\NPL@copyrightpage
+{\clearpage\def\thepage{copy}
+\begin{center}
+\NPL@copy\par
+\vskip 10mm
+\NPL@ISSN\par
+\vskip 10mm
+\NPLtext,\\
+\NPL@addr\par
+\vfill
+\NPL@extract\par
+\vfill
+\NPL@acknowledgement\par\vfill
+\NPL@sign\par
+\end{center}
+\cleardoublepage}
+
+\newcommand\NPL@plainhead{\ifNPL@closed
+\fancyhead[C]{\NPL@docref\\\textbf{\NPL@restrict}}
+\else 
+\fancyhead[LE,RO]{\NPL@docref}
+\fancyhead[LO]{\NPL@left}
+\fancyhead[RE]{\NPL@head}
+\fi}
+
+\newcommand\NPL@titlehead{\ifNPL@closed
+\fancyhead[C]{\NPL@docref\\\textbf{\NPL@restrict}}
+\else 
+\fancyhead[LE,RO]{\NPL@docref}
+\fi}
+
+\newcommand\NPL@rulewidth{
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+
+\newenvironment{prelude}
+{\cleardoublepage\setcounter{page}{1}\pagenumbering{roman}
+\fancypagestyle{plain}{\fancyhf{}
+\NPL@plainhead
+\fancyfoot[C]{\thepage}
+\NPL@rulewidth}
+\pagestyle{plain}\parskip 0pt}
+{\cleardoublepage\setcounter{page}{1}\pagenumbering{arabic}}
+
+% pagestyle
+
+\RequirePackage{lastpage}
+\fancypagestyle{plain}{\fancyhf{}
+\NPL@plainhead
+\ifthenelse{\equal{}{\NPL@foot}}
+ {\fancyfoot[C]{Page \thepage\ of \pageref*{LastPage}}}
+ {\fancyfoot[LE,RO]{Page \thepage\ of \pageref*{LastPage}}
+\fancyfoot[LO,RE]{\NPL@foot}}
+\NPL@rulewidth}
+
+\fancypagestyle{title}{\fancyhf{}\NPL@titlehead\NPL@rulewidth}
+
+\ifNPL@cover\ifNPL@DIUSfoot\else\RequirePackage{color}\fi\fi
+
+\fancypagestyle{cover}{\fancyhf{}
+\fancyhead[L]{\vskip -\topmargin\vskip -1truein      % PMH 07-10-2010
+\makebox[0pt]{\includegraphics{NPL}}}                % PMH 07-10-2010
+\fancyfoot[L]{\vskip 5mm\makebox[0pt]{               % PMH 07-10-2010
+\ifNPL@DIUSfoot\includegraphics{NMS}\else            % PMH 07-10-2010
+{\sffamily\footnotesize\color[rgb]{0,0,1}
+\begin{tabular}[b]{c|c|c|c|c|c}
+National Physical Laboratory  &  Hampton Road    & 
+Teddington   &    Middlesex   &  United Kingdom  &  TW11 0LW
+\\  \multicolumn{6}{c}{}
+\\  \multicolumn{6}{c}{
+\textbf{Switchboard}	020 8977 3222	\hfill\vline\hfill
+\textbf{NPL Helpline}	020 8943 6880	\hfill\vline\hfill    
+\textbf{Fax}		020 8943 6458  	\hfill\vline\hfill
+\textbf{www.npl.co.uk}}
+\end{tabular}}\fi}}
+\NPL@rulewidth}
+
+% fudge for fancy page styles with >10pt
+
+\ifNPL@closed
+  \ifdim\headheight<2\baselineskip\setlength\headheight{2\baselineskip}\fi
+\else
+  \ifdim\headheight<\baselineskip \setlength\headheight{\baselineskip} \fi
+\fi
+
+\ifdim\footskip<3\baselineskip\setlength\footskip{3\baselineskip}\fi
+
+\PassOptionsToPackage{plainpages=false,pdfpagelabels}{hyperref}
+
+% Revision 3.4  2005/05/04 15:14:29  rmb1
+% moved layout from styles to report; change preamble page names; corrected abstractpage
+%
+% Revision 3.3  2005/05/04 09:28:12  rmb1
+% used NPL@status on cover; PassOptionsTo hyperref; version 05/05/05 (the neighbour of the beast)
+%
+% Revision 3.2  2005/05/03 16:30:54  rmb1
+% Added ssfmbpg2004.sty	- snap-shot of ssfmbpg.sty March/April 2004
+%
+% Added open2001.tex open2004.tex ssfmbpgX2001.tex ssfmgpgY2004.tex
+% 	- to test *2004.sty for CISE/CMSC reports and guides
+%
+% Removed nplreport2000.sty nplreportV.sty ssfm3pg.sty - moved
+%
+% Changed naming scheme:
+% 	*2004.sty is from March/April 2004
+% 	*.sty (with no year) is current
+%
+% Removed all the negative page numbers,
+% 	requires plainpages=false,pdfpagelabels
+% 	and avoids conflicting page numbers using \pagenumbering
+%
+% Revision 3.1  2005/04/28 16:06:33  rmb1
+% SSfM guides are now NPL report (v2005)
+%
+% Revision 3.2  2004/10/21 18:11:24  rmb1
+% keywords update
+%
+
