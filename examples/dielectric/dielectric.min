@@ -1,0 +1,41 @@
+global
+format ascii
+
+xmesh
+  -1 1 0.2
+end
+
+ymesh
+  -1 1 0.2
+end
+
+zmesh
+  -1 1 0.2
+end
+
+end
+
+part 1
+  region 1
+  type box
+  fab 2 2 2
+end
+
+part 2
+  region 2
+  type sphere
+  fab 0.5
+  surface region 1
+end
+
+part 3
+  region 3
+  type boundzup
+end
+
+part 4
+  region 4
+  type boundzdn
+end
+
+endfile

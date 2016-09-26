@@ -1,0 +1,380 @@
+! based on Grotthus_multi_3.5a_w.mph
+
+!zou_format=ascii
+
+solver=UMFPACK
+newton=YES
+removefixed=NO
+omega=1.5
+nstep=1
+nstride=10
+nvar=8
+scale=1e-3
+tol=0
+itmax=100
+! nodecheck=yes
+restart=fullfuel.zou
+residual=pivots
+! key_Q=4
+
+labels = vEle p wH wO wH2OCat vMem cH3O cH2O
+
+!######################################################################
+region 1 elements 12 values C
+1 1 1 1 = $C_VELE_VELE_1
+1 2 1 2 = $C_VELE_VELE_1
+1 3 1 3 = $C_VELE_VELE_1
+
+2 1 2 1 = $C_P_P_1
+2 2 2 2 = $C_P_P_1
+2 3 2 3 = $C_P_P_1
+
+3 1 3 1 = $C_WH_WH_1
+3 2 3 2 = $C_WH_WH_1
+3 3 3 3 = $C_WH_WH_1
+
+3 1 2 1 = $C_WH_P_1
+3 2 2 2 = $C_WH_P_1
+3 3 2 3 = $C_WH_P_1
+
+!######################################################################
+region 2 elements 27 values C
+1 1 1 1 = $C_VELE_VELE_2
+1 2 1 2 = $C_VELE_VELE_2
+1 3 1 3 = $C_VELE_VELE_2
+
+2 1 2 1 = $C_P_P_2
+2 2 2 2 = $C_P_P_2
+2 3 2 3 = $C_P_P_2
+
+3 1 3 1 = $C_WH_WH_2
+3 2 3 2 = $C_WH_WH_2
+3 3 3 3 = $C_WH_WH_2
+
+3 1 2 1 = $C_WH_P_2
+3 2 2 2 = $C_WH_P_2
+3 3 2 3 = $C_WH_P_2
+
+6 1 6 1 = $C_VMEM_VMEM_2
+6 2 6 2 = $C_VMEM_VMEM_2
+6 3 6 3 = $C_VMEM_VMEM_2
+
+6 1 7 1 = $C_VMEM_CH3O_2
+6 2 7 2 = $C_VMEM_CH3O_2
+6 3 7 3 = $C_VMEM_CH3O_2
+
+7 1 6 1 = $C_CH3O_VMEM_2
+7 2 6 2 = $C_CH3O_VMEM_2
+7 3 6 3 = $C_CH3O_VMEM_2
+
+7 1 7 1 = $C_CH3O_CH3O_2
+7 2 7 2 = $C_CH3O_CH3O_2
+7 3 7 3 = $C_CH3O_CH3O_2
+
+8 1 8 1 = $C_CH2O_CH2O_2
+8 2 8 2 = $C_CH2O_CH2O_2
+8 3 8 3 = $C_CH2O_CH2O_2
+
+!######################################################################
+region 3 elements 15 values C
+6 1 6 1 = $C_VMEM_VMEM_3
+6 2 6 2 = $C_VMEM_VMEM_3
+6 3 6 3 = $C_VMEM_VMEM_3
+
+6 1 7 1 = $C_VMEM_CH3O_3
+6 2 7 2 = $C_VMEM_CH3O_3
+6 3 7 3 = $C_VMEM_CH3O_3
+
+7 1 6 1 = $C_CH3O_VMEM_3
+7 2 6 2 = $C_CH3O_VMEM_3
+7 3 6 3 = $C_CH3O_VMEM_3
+
+7 1 7 1 = $C_CH3O_CH3O_3
+7 2 7 2 = $C_CH3O_CH3O_3
+7 3 7 3 = $C_CH3O_CH3O_3
+
+8 1 8 1 = $C_CH2O_CH2O_3
+8 2 8 2 = $C_CH2O_CH2O_3
+8 3 8 3 = $C_CH2O_CH2O_3
+
+!######################################################################
+region 4 elements 39 values C
+1 1 1 1 = $C_VELE_VELE_4
+1 2 1 2 = $C_VELE_VELE_4
+1 3 1 3 = $C_VELE_VELE_4
+
+2 1 2 1 = $C_P_P_4
+2 2 2 2 = $C_P_P_4
+2 3 2 3 = $C_P_P_4
+
+4 1 4 1 = $C_WO_WO_4
+4 2 4 2 = $C_WO_WO_4
+4 3 4 3 = $C_WO_WO_4
+
+4 1 5 1 = $C_WO_WH2O_4
+4 2 5 2 = $C_WO_WH2O_4
+4 3 5 3 = $C_WO_WH2O_4
+
+5 1 4 1 = $C_WH2O_WO_4
+5 2 4 2 = $C_WH2O_WO_4
+5 3 4 3 = $C_WH2O_WO_4
+
+5 1 5 1 = $C_WH2O_WH2O_4
+5 2 5 2 = $C_WH2O_WH2O_4
+5 3 5 3 = $C_WH2O_WH2O_4
+
+4 1 2 1 = $C_WO_P_4
+4 2 2 2 = $C_WO_P_4
+4 3 2 3 = $C_WO_P_4
+
+5 1 2 1 = $C_WH2O_P_4
+5 2 2 2 = $C_WH2O_P_4
+5 3 2 3 = $C_WH2O_P_4
+
+6 1 6 1 = $C_VMEM_VMEM_4
+6 2 6 2 = $C_VMEM_VMEM_4
+6 3 6 3 = $C_VMEM_VMEM_4
+
+6 1 7 1 = $C_VMEM_CH3O_4
+6 2 7 2 = $C_VMEM_CH3O_4
+6 3 7 3 = $C_VMEM_CH3O_4
+
+7 1 6 1 = $C_CH3O_VMEM_4
+7 2 6 2 = $C_CH3O_VMEM_4
+7 3 6 3 = $C_CH3O_VMEM_4
+
+7 1 7 1 = $C_CH3O_CH3O_4
+7 2 7 2 = $C_CH3O_CH3O_4
+7 3 7 3 = $C_CH3O_CH3O_4
+
+8 1 8 1 = $C_CH2O_CH2O_4
+8 2 8 2 = $C_CH2O_CH2O_4
+8 3 8 3 = $C_CH2O_CH2O_4
+
+! ######################################################################
+region 5 elements 24 values C
+
+1 1 1 1 = $C_VELE_VELE_5
+1 2 1 2 = $C_VELE_VELE_5
+1 3 1 3 = $C_VELE_VELE_5
+
+2 1 2 1 = $C_P_P_5
+2 2 2 2 = $C_P_P_5
+2 3 2 3 = $C_P_P_5
+
+4 1 4 1 = $C_WO_WO_5
+4 2 4 2 = $C_WO_WO_5
+4 3 4 3 = $C_WO_WO_5
+
+4 1 5 1 = $C_WO_WH2O_5
+4 2 5 2 = $C_WO_WH2O_5
+4 3 5 3 = $C_WO_WH2O_5
+
+5 1 4 1 = $C_WH2O_WO_5
+5 2 4 2 = $C_WH2O_WO_5
+5 3 4 3 = $C_WH2O_WO_5
+
+5 1 5 1 = $C_WH2O_WH2O_5
+5 2 5 2 = $C_WH2O_WH2O_5
+5 3 5 3 = $C_WH2O_WH2O_5
+
+4 1 2 1 = $C_WO_P_5
+4 2 2 2 = $C_WO_P_5
+4 3 2 3 = $C_WO_P_5
+
+5 1 2 1 = $C_WH2O_P_5
+5 2 2 2 = $C_WH2O_P_5
+5 3 2 3 = $C_WH2O_P_5
+
+region 6 elements 0 values C
+region 7 elements 0 values C
+
+! ######################################################################
+
+region 1 elements 1 values f
+wH=     $F_WH_1
+
+region 2 elements 5 value f
+vEle=   $F_VELE_2
+p=      $F_P_2
+wH=     $F_WH_2
+vMem=   $F_VMEM_2
+cH2O=   $F_CH2O_2
+
+region 4 elements 6 value f
+vEle=   $F_VELE_4
+p=      $F_P_4
+wO=     $F_WO_4
+wH2OCat=$F_WH2O_4
+vMem=   $F_VMEM_4
+cH2O=   $F_CH2O_4
+
+region 5 elements 2 values f
+wO=     $F_WO_5
+wH2OCat=$F_WH2O_5
+
+!######################################################################
+! Deactivate redundant DOFs
+
+region 1 nodes 6 values
+init vEle=vCellAno
+wO=0
+wH2OCat=0
+cH3O=0
+cH2O=0
+vMem=0
+
+region 2 nodes 3 values
+init vEle=vCellAno
+wO=0
+wH2OCat=0
+!cH2O=27
+
+region 3 nodes 5 values
+vEle = 0
+p = 0
+wH = 0
+wO = 0
+wH2OCat = 0
+!cH2O=27
+
+region 4 nodes 2 value
+init vEle=vCellCat
+wH=0
+!cH2O=27
+
+region 5 nodes 5 values
+init vEle=vCellCat
+wH=0
+cH3O=0
+cH2O=0
+vMem=0
+
+! ######################################################################
+! Internal Dirichlet
+
+! left indentation
+region 6 nodes 8 values
+vEle=vCellAno
+p=0
+wH=0
+wO=0
+wH2OCat=0
+vMem=0
+cH3O=0
+cH2O=0
+
+! right indentation
+region 7 nodes 8 values
+vEle=vCellCat
+p=0
+wH=0
+wO=0
+wH2OCat=0
+vMem=0
+cH3O=0
+cH2O=0
+
+! Internal CH3O Dirichlet (anode)
+region 8 nodes 4 values
+cH3O=84
+wO=0
+wH2OCat=0
+init vEle=vCellAno
+!cH3O=$CH3OANO
+!cH2O=27
+! vMem=0
+
+! Internal CH3O Dirichlet (cathode)
+region 9 nodes 3 values
+cH3O=84
+wH=0
+init vEle=vCellCat
+!cH3O=$CH3OCAT
+!cH2O=27
+! vMem=0
+
+! ######################################################################
+! External Dirichlet
+
+! left
+region 10 nodes 6 values
+vEle=vCellAno
+wO=0
+wH2OCat=0
+cH3O=0
+cH2O=0
+vMem=0
+
+! right
+region 11 nodes 5 values
+vEle=vCellCat
+wH=0
+cH3O=0
+cH2O=0
+vMem=0
+
+! top left
+region 12 nodes 7 values
+p=pRef
+wO=0
+wH2OCat=0
+cH3O=0
+cH2O=0
+vMem=0
+init vEle=vCellAno
+
+! bottom left
+region 13 nodes 8 values
+wH=wHIn
+p=pAnoIn
+wO=0
+wH2OCat=0
+cH3O=0
+cH2O=0
+vMem=0
+init vEle=vCellAno
+
+! top right
+region 14 nodes 8 values
+wO=wOIn
+wH2OCat=wH2OIn
+p=pCatIn
+wH=0
+cH3O=0
+cH2O=0
+vMem=0
+init vEle=vCellCat
+
+! bottom right
+region 15 nodes 6 values
+p=pRef
+wH=0
+cH3O=0
+cH2O=0
+vMem=0
+init vEle=vCellCat
+
+! ######################################################################
+! safest to set deactivated parameters zero initially as well
+
+! Use this to continue from a previous run
+init
+vEle=R1
+p=R2
+wH=R3
+wO=R4
+wH2OCat=R5
+vMem=R6
+cH3O=R7
+cH2O=R8
+
+! Use this to start from scratch
+!wH=wHIn
+!wO=wOIn
+!wH2OCat=wH2OIn
+!p=pRef
+!vEle=(vCellAno+vCellCat)/2
+!vMem=0
+!cH3O=84
+!cH2O=27

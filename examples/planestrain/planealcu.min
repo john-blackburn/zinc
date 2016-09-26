@@ -1,0 +1,49 @@
+global
+
+format text
+
+xmesh
+0 2.0 0.05
+end
+
+ymesh
+0 2.0 0.05
+end
+
+zmesh
+-0.025 0.025 0.05
+end
+
+end
+
+part 1
+region 1
+type box
+fab 2 2 0.1
+shift 1 1 0.0
+end
+
+part 2
+region 2
+type cylinder
+fab 0.5 1.0
+surface region 1
+end
+
+part 3
+region 3
+type boundxdn
+end
+
+part 4
+region 4
+type boundydn
+end
+
+part 5
+region 5
+type line
+fab 0.1
+end
+
+endfile

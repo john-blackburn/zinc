@@ -1,0 +1,31 @@
+solver=SOR
+nvar=1
+itmax=10000
+tol=1e-12
+omega=1.5
+scale=1
+labels = V
+
+region 1 elements C
+  V V = [eps1, 0, 0, &
+         0, eps1, 0, &
+         0, 0, eps1]
+end
+
+region 2 elements C
+  V V = [eps2, 0, 0, &
+         0, eps2, 0, &
+         0, 0, eps2]
+end
+
+region 3 nodes
+  V = 1.0
+end
+
+region 4 nodes
+  V = 0.0
+end
+
+init
+  V = 0.0
+end

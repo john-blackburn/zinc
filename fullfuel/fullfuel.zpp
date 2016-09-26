@@ -1,0 +1,7 @@
+graph=emf
+ftol=1e-3
+
+linescan 100 -1.7e-1 -0.99 0  -1.7e-1 0.99 0 = wH
+linescan 100  1.3e-1 -0.99 0   1.3e-1 0.99 0 = wO
+linescan 100  1.3e-1 -0.99 0   1.3e-1 0.99 0 = wH2OCat
+linescan 100  1.3e-1 -0.99 0   1.3e-1 0.99 0 = p

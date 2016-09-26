@@ -1,0 +1,107 @@
+global
+  xmesh
+   -0.37  -0.07  0.02
+   -0.07   0.07  0.01
+    0.07   0.37  0.02
+  end
+
+  ymesh
+    -1 1 0.05
+  end
+
+  zmesh 
+    -0.06 0.06 0.04
+  end
+end
+
+part 1
+  region 1
+  type box
+  fab 0.3 2 0.12
+  shift -0.22 0 0
+end
+
+part 2
+  region 2
+  type box
+  fab 0.02 2 0.12
+  shift -0.06 0 0
+  coat 1 8
+end
+
+part 3
+  region 3
+  type box
+  fab 0.1 2 0.12
+  coat 2 2
+end
+
+part 4
+  region 4
+  type box
+  fab 0.02 2 0.12
+  shift 0.06 0 0
+  coat 3 4
+end
+
+part 5
+  region 5
+  type box
+  fab 0.3 2 0.12
+  shift 0.22 0 0
+  coat 4 9
+end
+
+part 6
+  region 6
+  type box
+  fab 0.1 1 0.12
+  shift -0.32 0 0
+  coat 1 10
+end
+
+part 7
+  region 7
+  type box
+  fab 0.1 1 0.12
+  shift 0.32 0 0
+  coat 5 11
+end
+
+* Top left
+part 8
+  region 12
+  type plate
+  fab 0.12 0.5
+  rotate 0 90 0
+  shift -0.37 0.75 0
+end
+
+* Bottom left
+part 9
+  region 13
+  type plate
+  fab 0.12 0.5
+  rotate 0 90 0
+  shift -0.37 -0.75 0
+end
+
+* Top right
+part 10
+  region 14
+  type plate
+  fab 0.12 0.5
+  rotate 0 90 0
+  shift 0.37 0.75 0
+end
+
+* Bottom right
+part 11
+  region 15
+  type plate
+  fab 0.12 0.5
+  rotate 0 90 0
+  shift 0.37 -0.75 0
+end
+
+endfile

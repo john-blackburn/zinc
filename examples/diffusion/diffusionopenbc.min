@@ -1,0 +1,29 @@
+global
+format ascii
+
+xmesh
+ -0.0125 0.0125 0.025
+end
+
+ymesh
+ -0.0125 0.0125 0.025
+end
+
+zmesh
+ -0.0125 0.0125 1.25e-3
+end
+
+end
+
+part 1
+  region 1
+  type box
+  fab 1 1 0.025
+end
+
+part 2
+  region 2
+  type boundzup
+end
+
+endfile

@@ -1,0 +1,40 @@
+global
+
+xmesh
+-0.125 0.125 0.025
+end
+
+ymesh
+-1.0 1.0 0.1
+end
+
+zmesh
+-0.05 0.05 0.05
+end
+
+end
+
+part 1
+type box
+fab 0.250 2.0 0.1
+region 1
+end
+
+part 2
+type plate
+region 2
+fab 0.21 0.51
+rotate 0 90 0
+shift 0.125 0.75 0
+*shift 0.125 0.75 0
+end
+
+part 3
+type plate
+region 3
+fab 0.21 0.51
+rotate 0 90 0
+shift 0.125 -0.75 0
+end
+
+endfile

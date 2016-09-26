@@ -1,0 +1,21 @@
+graph=emf
+
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = ux
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = uy
+
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = uxx
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = uyy
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = uzz
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = 0.5*(uxy+uyx)
+
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = &       ! sxx
+    {1=c11,2=c11inc}*uxx+{1=c12,2=c12inc}*uyy+{1=c13,2=c13inc}*uzz
+
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = &       ! syy
+    {1=c21,2=c21inc}*uxx+{1=c22,2=c22inc}*uyy+{1=c23,2=c23inc}*uzz
+
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = &       ! szz
+    {1=c31,2=c31inc}*uxx+{1=c32,2=c32inc}*uyy+{1=c33,2=c33inc}*uzz
+
+planescan 3 0.0   0.0 2.0   0.0 2.0  30 30 = &       ! sxy
+    {1=c66,2=c66inc}*(uxy+uyx)

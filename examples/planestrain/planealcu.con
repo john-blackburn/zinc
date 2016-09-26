@@ -1,0 +1,88 @@
+! 11 12 13
+! 21 22 23
+! 31 32 33
+!          44
+!             55
+!                66
+
+c11=1.203e11    ! datasheet values  Al
+c33=1.203e11
+c44=2.8556e10
+c12=5.888e10
+c13=5.888e10
+c66=2.8556e10
+         
+c22=c11        ! crystal symmetry (4mm)
+c23=c13
+c55=c44
+
+c14=0          ! matrix zeroes
+c15=0
+c16=0
+c24=0
+c25=0
+c26=0
+c34=0
+c35=0
+c36=0
+c45=0
+c46=0
+c56=0
+
+c21=c12        ! matrix symmetry
+c31=c13
+c32=c23
+c41=c14
+c42=c24
+c43=c34
+c51=c15
+c52=c25
+c53=c35
+c54=c45
+c61=c16
+c62=c26
+c63=c36
+c64=c46
+c65=c56
+
+! ======================================================================
+
+c11inc=2.282e11    ! datasheet values Cu
+c33inc=2.282e11
+c44inc=4.695e10
+c12inc=9.373e10
+c13inc=9.373e10
+c66inc=4.695e10
+         
+c22inc=c11inc        ! crystal symmetry (4mm)
+c23inc=c13inc
+c55inc=c44inc
+
+c14inc=0          ! matrix zeroes
+c15inc=0
+c16inc=0
+c24inc=0
+c25inc=0
+c26inc=0
+c34inc=0
+c35inc=0
+c36inc=0
+c45inc=0
+c46inc=0
+c56inc=0
+
+c21inc=c12inc        ! matrix symmetry
+c31inc=c13inc
+c32inc=c23inc
+c41inc=c14inc
+c42inc=c24inc
+c43inc=c34inc
+c51inc=c15inc
+c52inc=c25inc
+c53inc=c35inc
+c54inc=c45inc
+c61inc=c16inc
+c62inc=c26inc
+c63inc=c36inc
+c64inc=c46inc
+c65inc=c56inc

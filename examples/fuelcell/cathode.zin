@@ -1,0 +1,187 @@
+! Cathode simulation n=3 species
+! Note that only x1, x2 are solved for as x3=1-x1-x2
+! Thus, including p, there are 3 variables in total
+! NOTE: THIS SIMULATION RUNS SLOWLY COMPARED TO CATHODETOKEN.ZIN or CATHODETOKENC.ZIN
+! You might want to try CATHODETOKEN.ZIN first. 
+! This is because the equations below are interpreted in CATHODE 
+! but compiled into a DLL in CATHODETOKEN
+
+solver=SOR
+nvar=3
+scale=1e-3
+
+omega=0.1
+tol=0
+itmax=1000
+
+nstride=100
+
+! Try this for a quicker result
+ nstep=5
+ restart=cathode.rst
+ rst_format=ASCII
+
+! Or use this for full simulation
+! nstep=30
+
+labels = x1 x2 p
+
+! D11=[(x2*m23+m3-m3*x1)^2/(x1*D23)+m2^2*x2/D13+m3^2*(1-x1-x2)/D12]/m^2/denom
+! D22=[(x1*m13+m3-m3*x2)^2/(x2*D13)+m1^2*x1/D23+m3^2*(1-x1-x2)/D12]/m^2/denom
+! D12=[m1*(x2*m23+m3-m3*x1)/D23+m2*(x1*m13+m3-m3*x2)/D13-m3^2*(1-x1-x2)/D12]/m^2/denom
+! D13=[m1*(x2*m23+m3-m3*x1)/D23+m3*(m1*x1+m2*x2)/D12-m2^2*x2/D13]/m^2/denom
+! D23=[m2*(x1*m13+m2-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23]/m^2/denom
+
+region 1 elements 21 values C
+
+! Row 1 of B ----------------------------------------------------------------------------
+
+! p*m1*x1*(D11-D13)/RT
+1 1 1 1 = p*m1*x1/RT*((x2*m23+m3-m3*x1)^2/(x1*D23) + m2^2*x2/D13 + m3^2*(1-x1-x2)/D12   &
+                     -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13))/ &
+                     (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+1 2 1 2 = p*m1*x1/RT*((x2*m23+m3-m3*x1)^2/(x1*D23) + m2^2*x2/D13 + m3^2*(1-x1-x2)/D12   &
+                     -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13))/ &
+                     (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+1 3 1 3 = p*m1*x1/RT*((x2*m23+m3-m3*x1)^2/(x1*D23) + m2^2*x2/D13 + m3^2*(1-x1-x2)/D12   &
+                     -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13))/ &
+                     (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+
+! p*m1*x1*(D12-D13)/RT
+1 1 2 1 = p*m1*x1/RT*(m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12 &
+                    -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13))/     &
+                     (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+1 2 2 2 = p*m1*x1/RT*(m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12 &
+                    -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13))/     &
+                     (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+1 3 2 3 = p*m1*x1/RT*(m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12 &
+                    -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13))/     &
+                     (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+! Row 2 of B ----------------------------------------------------------------------------
+
+! p*m2*x2*(D21-D23)/RT
+2 1 1 1 = p*m2*x2/RT*(m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12 &
+                     -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23))/         &
+                      (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+2 2 1 2 = p*m2*x2/RT*(m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12 &
+                     -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23))/         &
+                      (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+2 3 1 3 = p*m2*x2/RT*(m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12 &
+                     -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23))/         &
+                      (m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+! p*m2*x2*(D22-D23)/RT
+2 1 2 1 = p*m2*x2/RT*((x1*m13+m3-m3*x2)^2/(x2*D13)+m1^2*x1/D23+m3^2*(1-x1-x2)/D12 &
+                     -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23))&
+                     /(m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+2 2 2 2 = p*m2*x2/RT*((x1*m13+m3-m3*x2)^2/(x2*D13)+m1^2*x1/D23+m3^2*(1-x1-x2)/D12 &
+                     -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23))&
+                     /(m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+2 3 2 3 = p*m2*x2/RT*((x1*m13+m3-m3*x2)^2/(x2*D13)+m1^2*x1/D23+m3^2*(1-x1-x2)/D12 &
+                     -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23))&
+                     /(m13*x1+m23*x2+m3)^2/(x1*fac1+x2*fac2+fac3)
+
+! col 3, row 1 Q block ----------------------------------------------------------------------------
+
+!     Cfun=m1*x1/RT*(x1*(D11*(1-m1/m)-D13*(1-m3/m)) &
+!                  + x2*(D12*(1-m2/m)-D13*(1-m3/m)) & 
+!                                    +D13*(1-m3/m))
+
+
+1 1 3 1 = m1*x1/RT*(x1*(((x2*m23+m3-m3*x1)^2/(x1*D23) + m2^2*x2/D13 + m3^2*(1-x1-x2)/D12)     *(m13*x1+m23*x2-m13)&
+                  -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  +x2*((m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12)*(m13*x1+m23*x2-m23)&
+                  -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  +(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  /(m13*x1+m23*x2+m3)^3/(x1*fac1+x2*fac2+fac3)
+
+1 2 3 2 = m1*x1/RT*(x1*(((x2*m23+m3-m3*x1)^2/(x1*D23) + m2^2*x2/D13 + m3^2*(1-x1-x2)/D12)     *(m13*x1+m23*x2-m13)&
+                  -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  +x2*((m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12)*(m13*x1+m23*x2-m23)&
+                  -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  +(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  /(m13*x1+m23*x2+m3)^3/(x1*fac1+x2*fac2+fac3)
+
+1 3 3 3 = m1*x1/RT*(x1*(((x2*m23+m3-m3*x1)^2/(x1*D23) + m2^2*x2/D13 + m3^2*(1-x1-x2)/D12)     *(m13*x1+m23*x2-m13)&
+                  -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  +x2*((m1*(x2*m23+m3-m3*x1)/D23 + m2*(x1*m13+m3-m3*x2)/D13 - m3^2*(1-x1-x2)/D12)*(m13*x1+m23*x2-m23)&
+                  -(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  +(m1*(x2*m23+m3-m3*x1)/D23 + m3*(m1*x1+m2*x2)/D12 - m2^2*x2/D13)            *(m13*x1+m23*x2))   &
+                  /(m13*x1+m23*x2+m3)^3/(x1*fac1+x2*fac2+fac3)
+
+
+! col 3, row 2 Q block ----------------------------------------------------------------------------
+
+!     Cfun=m2*x2/RT*(x1*(D21*(1-m1/m)-D23*(1-m3/m)) &
+!                  + x2*(D22*(1-m2/m)-D23*(1-m3/m)) & 
+!                                    +D23*(1-m3/m))
+
+2 1 3 1 = m2*x2/RT*(x1*(m1*(x2*m23+m3-m3*x1)/D23+m2*(x1*m13+m3-m3*x2)/D13-m3^2*(1-x1-x2)/D12)*(m13*x1+m23*x2-m13) &
+                  -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2)     &
+		   +x2*(((x1*m13+m3-m3*x2)^2/(x2*D13)+m1^2*x1/D23+m3^2*(1-x1-x2)/D12)        *(m13*x1+m23*x2-m23) &
+                  -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2))    &
+                  +(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2))    &
+                  /(m13*x1+m23*x2+m3)^3/(x1*fac1+x2*fac2+fac3)
+
+2 2 3 2 = m2*x2/RT*(x1*(m1*(x2*m23+m3-m3*x1)/D23+m2*(x1*m13+m3-m3*x2)/D13-m3^2*(1-x1-x2)/D12)*(m13*x1+m23*x2-m13) &
+                  -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2)     &
+		   +x2*(((x1*m13+m3-m3*x2)^2/(x2*D13)+m1^2*x1/D23+m3^2*(1-x1-x2)/D12)        *(m13*x1+m23*x2-m23) &
+                  -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2))    &
+                  +(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2))    &
+                  /(m13*x1+m23*x2+m3)^3/(x1*fac1+x2*fac2+fac3)
+
+2 3 3 3 = m2*x2/RT*(x1*(m1*(x2*m23+m3-m3*x1)/D23+m2*(x1*m13+m3-m3*x2)/D13-m3^2*(1-x1-x2)/D12)*(m13*x1+m23*x2-m13) &
+                  -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2)     &
+		   +x2*(((x1*m13+m3-m3*x2)^2/(x2*D13)+m1^2*x1/D23+m3^2*(1-x1-x2)/D12)        *(m13*x1+m23*x2-m23) &
+                  -(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2))    &
+                  +(m2*(x1*m13+m3-m3*x2)/D13+m3*(m1*x1+m2*x2)/D12-m1^2*x1/D23)               *(m13*x1+m23*x2))    &
+                  /(m13*x1+m23*x2+m3)^3/(x1*fac1+x2*fac2+fac3)
+
+! E section at bottom right ----------------------------------------------------------------------------
+
+3 1 3 1 = p*(m13*x1+m23*x2+m3)*kappa/(RT*eta)
+3 2 3 2 = p*(m13*x1+m23*x2+m3)*kappa/(RT*eta)
+3 3 3 3 = p*(m13*x1+m23*x2+m3)*kappa/(RT*eta)
+
+! f values ----------------------------------------------------------------------------
+
+region 1 elements 2 values f
+1 = p*kappa*m1/(eta*RT)*(px*(x1x-x1*(m1*x1x + m2*x2x + m3*(-x1x-x2x))/(m13*x1+m23*x2+m3)) &
+                        +py*(x1y-x1*(m1*x1y + m2*x2y + m3*(-x1y-x2y))/(m13*x1+m23*x2+m3)) &
+                        +pz*(x1z-x1*(m1*x1z + m2*x2z + m3*(-x1z-x2z))/(m13*x1+m23*x2+m3)))
+
+2 = p*kappa*m2/(eta*RT)*(px*(x2x-x2*(m1*x1x + m2*x2x + m3*(-x1x-x2x))/(m13*x1+m23*x2+m3)) &
+                        +py*(x2y-x2*(m1*x1y + m2*x2y + m3*(-x1y-x2y))/(m13*x1+m23*x2+m3)) &
+                        +pz*(x2z-x2*(m1*x1z + m2*x2z + m3*(-x1z-x2z))/(m13*x1+m23*x2+m3)))
+
+! ----------------------------------------------------------------------------
+
+region 2 nodes 3 values
+x1 = x1c
+x2 = x2c
+p = pc
+
+region 3 nodes 1 value
+p =pref
+
+init
+x1 = R1
+x2 = R2
+p =  R3
+
+! Use this to start from scratch
+! init
+! x1 = x1c
+! x2 = x2c
+! p = (pc+pref)/2
+

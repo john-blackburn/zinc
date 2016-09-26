@@ -1,0 +1,24 @@
+graph=emf
+ftol=1e-3
+
+!          N       x1   y1    z1       x2    y2    z2
+
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = ux
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = uy
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = uz
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = V
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = -Vz
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = -Vx
+
+linescan 100      0.5  0.0  -1.0      0.5   0.0   1.0 = V
+linescan 100      0.5  0.0  -1.0      0.5   0.0   1.0 = ux
+linescan 100      0.5  0.0  -1.0      0.5   0.0   1.0 = uz
+
+
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = &
+{1=c11,2=c11inc}*uxx + {1=c12,2=c12inc}*uyy + {1=c13,2=c13inc}*uzz + &
+{1=e31,2=e31inc}*Vz
+
+linescan 100     -1.0  0.1   0.4      1.0   0.1   0.4 = &
+{1=c12,2=c12inc}*uxx + {1=c22,2=c22inc}*uyy + {1=c23,2=c23inc}*uzz + &
+{1=e32,2=e32inc}*Vz

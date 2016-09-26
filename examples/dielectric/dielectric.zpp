@@ -1,0 +1,15 @@
+graph=emf
+ftol=1e-3
+
+!          N       x1   y1    z1       x2    y2    z2
+
+linescan 100    0.101 -0.3  -1.0     0.101 -0.3  +1.0 = V
+linescan 100    0.101 -0.3  -1.0     0.101 -0.3  +1.0 = V^2
+linescan 100    0.101 -0.3  -1.0     0.101 -0.3  +1.0 = -Vz
+linescan 100    0.0    0.0  -1.0     0.0    0.0  +1.0 = -Vz
+linescan 100    0.0    0.0  -1.0     0.0    0.0  +1.0 = -{1=eps1,2=eps2}*Vz
+
+!         yplane    y     x1     x2      z1     z2    Nx  Nz
+
+planescan      2  0.0   -1.0    1.0    -1.0    1.0    40  40 = V
+planescan      2  0.0   -1.0    1.0    -1.0    1.0    40  40 = -{1=eps1,2=eps2}*Vz
