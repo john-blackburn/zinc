@@ -34,9 +34,9 @@ ifeq ($(COMPILER), intel)
 else ifeq ($(COMPILER), gcc)
 	FC = gfortran
 	LD = gfortran
-	FFLAGS = -s -c -cpp -O2 -Wall -Wextra -Wno-unused-dummy-argument -Wno-unused-parameter -I d:\suitesparse\umfpack\demo -fno-underscoring -fbounds-check
+	FFLAGS = -s -c -cpp -O2 -Wall -Wextra -Wno-unused-dummy-argument -Wno-unused-parameter -I c:\suitesparse\umfpack\demo -fno-underscoring -fbounds-check
 	LDFLAGS = -o $@
-	ZINC_LIBS = d:\slatec\libslatec.a d:\suitesparse\umfpack\lib\libumfpack.a d:\suitesparse\AMD\lib\libamd.a d:\suitesparse\suitesparse_config\libsuitesparseconfig.a d:\openblas\lib\libopenblas.a
+	ZINC_LIBS = c:\slatec\libslatec.a c:\suitesparse\umfpack\lib\libumfpack.a c:\suitesparse\AMD\lib\libamd.a c:\suitesparse\suitesparse_config\libsuitesparseconfig.a c:\openblas\lib\libopenblas.a
 	ZPP_LIBS =
 endif
 
@@ -76,7 +76,7 @@ clean :
 
 .PHONY : depend
 depend :
-	gfortran -cpp -I d:\suitesparse\umfpack\demo -M $(ZINC_SRC) > $(ZINC_DEPEND)
+	gfortran -cpp -I c:\suitesparse\umfpack\demo -M $(ZINC_SRC) > $(ZINC_DEPEND)
 	gfortran -cpp -M $(ZPP_SRC) $(ZPP_SRC_FIXED) > $(ZPP_DEPEND)
 
 ###############################################################################

@@ -41,6 +41,7 @@ Zinc can be compiled using gcc (on Windows we use mingw from http://mingw.org). 
 In zinc main directory run
 
 <pre>
+make depend
 make
 </pre>
 
