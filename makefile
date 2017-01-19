@@ -34,9 +34,9 @@ ifeq ($(COMPILER), intel)
 else ifeq ($(COMPILER), gcc)
 	FC = gfortran
 	LD = gfortran
-	FFLAGS = -s -c -cpp -O2 -Wall -Wextra -Wno-unused-dummy-argument -Wno-unused-parameter -I c:\suitesparse\umfpack\demo -fno-underscoring -fbounds-check
+	FFLAGS = -s -c -cpp -O2 -Wall -Wextra -Wno-unused-dummy-argument -Wno-unused-parameter -I ..\suitesparse\umfpack\demo -fno-underscoring -fbounds-check
 	LDFLAGS = -o $@
-	ZINC_LIBS = c:\slatec\libslatec.a c:\suitesparse\umfpack\lib\libumfpack.a c:\suitesparse\AMD\lib\libamd.a c:\suitesparse\suitesparse_config\libsuitesparseconfig.a c:\openblas\lib\libopenblas.a
+	ZINC_LIBS = ..\slatec\slatec_src\libslatec.a ..\suitesparse\umfpack\lib\libumfpack.a ..\suitesparse\AMD\lib\libamd.a ..\suitesparse\suitesparse_config\libsuitesparseconfig.a ..\openblas\lib\libopenblas.a
 	ZPP_LIBS =
 endif
 
@@ -44,7 +44,7 @@ endif
 # Files
 
 ZINC_SRC = util.f90 precision.f90 strings.f90 evaluate.f90 common.f90 indexq.f90 solvers.f90 \
-    iofile.f90 shape.f90 geom.f90 heap.f90 matrices.f90 interpolate.f90 tree.f90 qpr.f90 cuboid.f90 update.f90 jacobian.f90 zinc.f90
+    iofile.f90 shape.f90 geom.f90 heap.f90 matrices.f90 interpolate.f90 tree.f90 qpr.f90 cuboid.f90 update.f90 jacobianmod.f90 zinc.f90
 ZINC_OBJS = $(patsubst %.f90, %.o, $(ZINC_SRC))
 ZINC_DEPEND = zinc.dep
 ZINC = zinc.exe
@@ -76,7 +76,7 @@ clean :
 
 .PHONY : depend
 depend :
-	gfortran -cpp -I c:\suitesparse\umfpack\demo -M $(ZINC_SRC) > $(ZINC_DEPEND)
+	gfortran -cpp -I ..\suitesparse\umfpack\demo -M $(ZINC_SRC) > $(ZINC_DEPEND)
 	gfortran -cpp -M $(ZPP_SRC) $(ZPP_SRC_FIXED) > $(ZPP_DEPEND)
 
 ###############################################################################

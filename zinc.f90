@@ -54,7 +54,7 @@ program zinc
   use heap
   use matrices
   use solvers
-  use jacobian
+  use jacobianmod
   use cuboid
 
   implicit none

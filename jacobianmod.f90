@@ -1,6 +1,6 @@
 ! Part of Zinc FE package. Author: John Blackburn
 
-module jacobian
+module jacobianmod
 
 implicit none
 
@@ -1164,4 +1164,4 @@ subroutine addtoQ(irow,icol,val)
 
 end subroutine addtoQ
 
-end module jacobian
+end module jacobianmod
