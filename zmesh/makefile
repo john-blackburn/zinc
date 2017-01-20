@@ -1,38 +1,58 @@
-%.obj : %.f90
-	ifort /nologo /c $(flags) $<
+COMPILER = gcc
 
-zmeshwinobj = snap.obj heap.obj const.obj global.obj geo.obj win.obj createmesh.obj zmesh.obj zmesh.res
+ifeq ($(COMPILER), intel)
+	FC = ifort
+	LD = link
+	FFLAGS = /O3 /nologo /names:lowercase /libs:static /threads /c /object:$@
+	LDFLAGS = /NOLOGO /WINAPP /OUT:$@
+	ZMESH_LIBS =
+	ZMESHWIN_LIBS =
+else ifeq ($(COMPILER), gcc)
+	FC = gfortran
+	LD = gfortran
+	FFLAGS = -s -c -O2 -Wall -Wextra -Wno-unused-dummy-argument -Wno-unused-parameter -fbounds-check
+	LDFLAGS = -o $@
+	ZMESH_LIBS =
+	ZMESHWIN_LIBS =
+endif
 
-zmeshobj = snap.obj global.obj createmesh.obj zmeshcon.obj
+ZMESHWIN_SRC = snap.f90 heap.f90 const.f90 global.f90 geo.f90 win.f90 createmesh.f90 zmesh.f90
+ZMESHWIN_OBJS = $(patsubst %.f90, %.o, $(ZMESHWIN_SRC)) zmesh.res
+ZMESHWIN_DEPEND = zmeshwin.dep
+ZMESH = zmeshwin.exe
 
+ZMESH_SRC = snap.f90 global.f90 createmesh.f90 zmeshcon.f90
+ZMESH_OBJS = $(patsubst %.f90, %.o, $(ZMESH_SRC))
+ZMESH_DEPEND = zmesh.dep
+ZMESH = zmesh.exe
 
-zmeshwinflags = /nologo /optimize:3 /winapp /warn
-zmeshflags = /nologo /optimize:3 /warn
+EXTRA_TO_DELETE = *.mod
 
 .PHONY: all
-all : zmeshwin.exe zmesh.exe
+all : $(ZMESH) $(ZMESHWIN)
 
-zmeshwin.exe : $(zmeshwinobj)
-	ifort $(zmeshwinflags) /exe:zmeshwin.exe $(zmeshwinobj)
+$(ZMESH) : $(ZMESH_OBJS)
+	$(LD) $(LDFLAGS) $(ZMESH_OBJS) $(ZMESH_LIBS)
 
-zmesh.exe : $(zmeshobj)
-	ifort $(zmeshflags) /exe:zmesh.exe $(zmeshobj)
+$(ZMESHWIN) : $(ZMESHWIN_OBJS)
+	$(LD) $(LDFLAGS) $(ZMESHWIN_OBJS) $(ZMESHWIN_LIBS)
 
-snap.obj :
+.PHONY : clean
+clean :
+	del $(ZMESH_OBJS) $(ZMESHWIN_OBJS) $(ZMESH) $(ZMESHWIN) $(EXTRA_TO_DELETE)
 
-heap.obj :
+.PHONY : depend
+depend :
+	gfortran -cpp -M $(ZMESH_SRC) > $(ZMESH_DEPEND)
+	gfortran -cpp -M $(ZMESHWIN_SRC) > $(ZMESHWIN_DEPEND)
 
-const.obj :
+%.o %.mod : %.f90
+	@del $*.mod
+	$(FC) $(FFLAGS) $<
 
-global.obj :
-
-geo.obj : global.obj const.obj
-
-win.obj : global.obj createmesh.obj const.obj geo.obj heap.obj
-
-createmesh.obj : snap.obj global.obj
-
-zmesh.obj : global.obj const.obj win.obj
-
+# correct for ifort, needs to be generalised for gfortran
 zmesh.res : zmesh.rc
-	  rc zmesh.rc
+	rc zmesh.rc
+
+-include $(ZMESH_DEPEND)
+-include $(ZMESHWIN_DEPEND)
